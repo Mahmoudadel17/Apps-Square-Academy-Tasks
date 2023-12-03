@@ -36,10 +36,3 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     )
 }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    TestappTheme {
-        Greeting("Android from mahmoud")
-    }
-}
