@@ -73,15 +73,15 @@ fun IntroScreen(navController:NavHostController) {
             horizontalAlignment = Alignment.Start
         ) {
             MyText(id =R.string.intro_plan_your, size = 25)
-            MyText(id =R.string.intro_luxurious, size = 45)
-            MyText(id =R.string.intro_vaction, size = 45)
+            MyText(id =R.string.intro_luxurious, size = 40)
+            MyText(id =R.string.intro_vaction, size = 40)
 
             ButtonClickOn("Explore",15){
                 // on click action, go to sign up screen and remove this screen from back stack.
                 navController.navigate(Screens.SignUp.route){
-                    popUpTo(Screens.Intro.route) {
-                        inclusive = true
-                    }
+//                    popUpTo(Screens.Intro.route) {
+//                        inclusive = true
+//                    }
                 }
             }
         }

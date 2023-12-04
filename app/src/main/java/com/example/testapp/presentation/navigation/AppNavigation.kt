@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.testapp.presentation.mainScreens.IntroScreen
+import com.example.testapp.presentation.mainScreens.auth.signUp.SignUpScreen
 
 
 @Composable
@@ -18,7 +19,7 @@ fun AppNavigation() {
             IntroScreen(navController = navController)
         }
         composable(route = Screens.SignUp.route){
-
+            SignUpScreen()
         }
         composable(route = Screens.Login.route){
 

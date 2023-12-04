@@ -16,5 +16,8 @@ val textDarkHint = Color(0xFF292B2D)
 val textHint = Color(0xFF91919F)
 val textHintColor = Color(0xFF277EFF)
 
+val background = Color(0xFFFFFBFB)
+
 
 val componentsColor = Color(0xFF277EFF)
+val inputFieldColor = Color(0xFFFFFFFF)

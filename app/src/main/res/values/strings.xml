@@ -5,4 +5,20 @@
     <string name="intro_plan_your">Plan your</string>
     <string name="intro_luxurious">Luxurious</string>
     <string name="intro_vaction">Vacation</string>
+    <string name="signUp">Sign Up</string>
+    <string name="login">Login</string>
+    <string name="signUp_hint">Create your personal profile.com and follow.</string>
+    <string name="signUp_termsAgree1">By signing up, you agree to the </string>
+    <string name="signUp_termsAgree2">Terms of Service and Privacy Policy</string>
+    <string name="signUp_haveAccount">Already have an account?  </string>
+    <string name="phone">Phone Number</string>
+    <string name="email">Email</string>
+    <string name="city">City</string>
+    <string name="password">Password</string>
+    <string name="login_hint">Enter to your personal profile.com and follow.</string>
+    <string name="login_d_haveAccount">Don’t have an account yet?  </string>
+    <string name="home_popular_cities">Popular Cities</string>
+    <string name="comming_soon">Comming Soon</string>
+    <string name="refresh">Refresh</string>
+
 </resources>

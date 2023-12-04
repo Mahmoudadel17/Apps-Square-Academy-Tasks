@@ -16,15 +16,17 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-        primary = Purple80,
-        secondary = PurpleGrey80,
-        tertiary = Pink80
+    primary = inputFieldColor,
+    secondary = PurpleGrey80,
+    tertiary = Pink80,
+    background = background,
 )
 
 private val LightColorScheme = lightColorScheme(
-        primary = Purple40,
-        secondary = PurpleGrey40,
-        tertiary = Pink40
+    primary = inputFieldColor,
+    secondary = PurpleGrey40,
+    tertiary = Pink40,
+    background = background,
 
         /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -57,7 +59,7 @@ fun TestappTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.primary.toArgb()
+            window.statusBarColor = colorScheme.background.toArgb()
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
         }
     }
