@@ -2,4 +2,7 @@
     <string name="app_name">testapp</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="intro_title">Aspen</string>
+    <string name="intro_plan_your">Plan your</string>
+    <string name="intro_luxurious">Luxurious</string>
+    <string name="intro_vaction">Vacation</string>
 </resources>
