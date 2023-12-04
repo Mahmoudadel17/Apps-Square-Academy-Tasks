@@ -1,4 +1,4 @@
-package com.example.testapp.presentation.mainScreens.auth.signUp
+package com.example.testapp.presentation.mainScreens.auth.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -36,18 +36,18 @@ import com.example.testapp.presentation.components.CityEditText
 import com.example.testapp.presentation.components.EmailEditText
 import com.example.testapp.presentation.components.PasswordEditText
 import com.example.testapp.presentation.components.PhoneEditText
-import com.example.testapp.presentation.mainScreens.auth.AuthScreenState
+import com.example.testapp.presentation.mainScreens.auth.signUp.auth
 import com.example.testapp.ui.theme.background
 import com.example.testapp.ui.theme.componentsColor
 import com.example.testapp.ui.theme.textDark
 import com.example.testapp.ui.theme.textDarkHint
 import com.example.testapp.ui.theme.textHint
 
-val auth = AuthScreenState(phoneNumber = "", email = "", city = "", password = "")
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
-fun SignUpScreen() {
+fun LoginScreen() {
+
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -57,16 +57,12 @@ fun SignUpScreen() {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start,
         ){
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = "back",
-                Modifier.size(30.dp)
-            )
+
             Image(
                 painter = painterResource(id = R.drawable.logo),
                 contentDescription = "logo signUp",
                 modifier = Modifier
-                    .weight(0.90f)
+                    .weight(0.60f)
                     .size(60.dp)
 
             )
@@ -75,7 +71,7 @@ fun SignUpScreen() {
             modifier = Modifier.padding(top = 10.dp)
         ){
             Text(
-                text = stringResource(id = R.string.signUp),
+                text = stringResource(id = R.string.login),
                 style = TextStyle(
                     color = textDark,
                     fontSize = 37.sp,
@@ -83,7 +79,7 @@ fun SignUpScreen() {
                 )
             )
             Text(
-                text = stringResource(id = R.string.signUp_hint),
+                text = stringResource(id = R.string.login_hint),
                 style = TextStyle(
                     color = textDarkHint,
                     fontSize = 16.sp,
@@ -98,18 +94,7 @@ fun SignUpScreen() {
                     phoneNumberErrorMessage = auth.phoneNumberErrorMessage,
                     onValueChange = {}
                 )
-                EmailEditText(
-                    email = auth.email,
-                    isErrorEmail = auth.isErrorEmail,
-                    emailErrorMessage = auth.emailErrorMessage,
-                    onValueChange ={}
-                )
-                CityEditText(
-                    city = auth.city,
-                    isCityError = auth.isErrorCity,
-                    cityErrorMessage = auth.cityErrorMessage,
-                    onValueChange ={}
-                )
+
                 PasswordEditText(
                     password = auth.password,
                     isErrorPassword = auth.isErrorPassword,
@@ -122,66 +107,35 @@ fun SignUpScreen() {
             }
 
 
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Checkbox(
-                    checked = false,
-                    onCheckedChange = {},
-                    colors = CheckboxDefaults.colors(
-                        checkedColor = componentsColor,
-                        uncheckedColor = componentsColor,
-                        checkmarkColor = background
-                    )
-                )
-                
-                Text(
-
-                    buildAnnotatedString {
-                        withStyle(style = SpanStyle(color = textDark)) {
-                            append(stringResource(id = R.string.signUp_termsAgree1))
-                        }
-                        append(" ")
-                        withStyle(style = SpanStyle(color = componentsColor)) {
-                            append(stringResource(id = R.string.signUp_termsAgree2))
-                        }
-                    },
-                    fontSize = 14.sp,
-                )
-
-            }
-
-
-
         }
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             ButtonClickOn(
-                buttonText = stringResource(id = R.string.signUp),
+                buttonText = stringResource(id = R.string.login),
                 paddingValue = 30
             ) {
                 // on click action
             }
-            Row (
+            Row(
                 modifier = Modifier.padding(top = 15.dp)
-            ){
+            ) {
                 Text(
-                    text = stringResource(id = R.string.signUp_haveAccount),
+                    text = stringResource(id = R.string.login_d_haveAccount),
                     style = TextStyle(
                         color = textHint
                     )
                 )
                 Spacer(modifier = Modifier.width(5.dp))
                 Text(
-                    text = stringResource(id = R.string.login),
+                    text = stringResource(id = R.string.signUp),
                     style = TextStyle(
                         color = componentsColor,
                         textDecoration = TextDecoration.Underline
                     ),
                     modifier = Modifier.clickable {
-                        // on login text click
+                        // on sign up text click
                     }
                 )
             }
