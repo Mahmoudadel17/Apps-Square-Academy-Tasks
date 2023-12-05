@@ -1,6 +1,6 @@
-package com.example.testapp.presentation.mainScreens.auth
+package com.example.testapp.presentation.mainScreens.auth.signUp
 
-data class AuthScreenState(
+data class SignUpScreenState(
     val phoneNumber:String,
     val isErrorPhoneNumber:Boolean = false,
     val phoneNumberErrorMessage:String = "",

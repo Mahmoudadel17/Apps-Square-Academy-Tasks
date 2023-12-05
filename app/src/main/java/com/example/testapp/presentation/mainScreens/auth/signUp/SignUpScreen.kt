@@ -30,24 +30,24 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.testapp.R
 import com.example.testapp.presentation.components.ButtonClickOn
 import com.example.testapp.presentation.components.CityEditText
 import com.example.testapp.presentation.components.EmailEditText
 import com.example.testapp.presentation.components.PasswordEditText
 import com.example.testapp.presentation.components.PhoneEditText
-import com.example.testapp.presentation.mainScreens.auth.AuthScreenState
+import com.example.testapp.presentation.navigation.Screens
 import com.example.testapp.ui.theme.background
 import com.example.testapp.ui.theme.componentsColor
 import com.example.testapp.ui.theme.textDark
 import com.example.testapp.ui.theme.textDarkHint
 import com.example.testapp.ui.theme.textHint
 
-val auth = AuthScreenState(phoneNumber = "", email = "", city = "", password = "")
 
-@Preview(showSystemUi = true, showBackground = true)
 @Composable
-fun SignUpScreen() {
+fun SignUpScreen(navController: NavHostController, signUpViewModel: SignUpViewModel) {
+   val state = signUpViewModel.state.value
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -60,7 +60,9 @@ fun SignUpScreen() {
             Icon(
                 imageVector = Icons.Default.ArrowBack,
                 contentDescription = "back",
-                Modifier.size(30.dp)
+                Modifier.size(30.dp).clickable {
+                                               navController.popBackStack()
+                },
             )
             Image(
                 painter = painterResource(id = R.drawable.logo),
@@ -93,31 +95,32 @@ fun SignUpScreen() {
                 modifier = Modifier.padding(top = 15.dp)
             ) {
                 PhoneEditText(
-                    phoneNumber = auth.phoneNumber,
-                    isPhoneNumberError = auth.isErrorPhoneNumber,
-                    phoneNumberErrorMessage = auth.phoneNumberErrorMessage,
-                    onValueChange = {}
+                    phoneNumber = state.phoneNumber,
+                    isPhoneNumberError = state.isErrorPhoneNumber,
+                    phoneNumberErrorMessage = state.phoneNumberErrorMessage,
+                    onValueChange = {phone->signUpViewModel.onPhoneNumberChange(phone)}
                 )
                 EmailEditText(
-                    email = auth.email,
-                    isErrorEmail = auth.isErrorEmail,
-                    emailErrorMessage = auth.emailErrorMessage,
-                    onValueChange ={}
+                    email = state.email,
+                    isErrorEmail = state.isErrorEmail,
+                    emailErrorMessage = state.emailErrorMessage,
+                    onValueChange ={email->signUpViewModel.onEmailChange(email)}
                 )
                 CityEditText(
-                    city = auth.city,
-                    isCityError = auth.isErrorCity,
-                    cityErrorMessage = auth.cityErrorMessage,
-                    onValueChange ={}
+                    city = state.city,
+                    isCityError = state.isErrorCity,
+                    cityErrorMessage = state.cityErrorMessage,
+                    onValueChange ={city->signUpViewModel.onCityChange(city)}
                 )
                 PasswordEditText(
-                    password = auth.password,
-                    isErrorPassword = auth.isErrorPassword,
-                    passwordErrorMessage = auth.passwordErrorMessage,
-                    showPassword = auth.showPassword,
-                    onValueChange ={}
+                    password = state.password,
+                    isErrorPassword = state.isErrorPassword,
+                    passwordErrorMessage = state.passwordErrorMessage,
+                    showPassword = state.showPassword,
+                    onValueChange ={password->signUpViewModel.onPasswordChange(password)}
                 ) {
                     // on show password click
+                    signUpViewModel.onIconButtonClick()
                 }
             }
 
@@ -126,8 +129,8 @@ fun SignUpScreen() {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Checkbox(
-                    checked = false,
-                    onCheckedChange = {},
+                    checked = state.termsAgree,
+                    onCheckedChange = {signUpViewModel.onTermsSelect()},
                     colors = CheckboxDefaults.colors(
                         checkedColor = componentsColor,
                         uncheckedColor = componentsColor,
@@ -163,6 +166,7 @@ fun SignUpScreen() {
                 paddingValue = 30
             ) {
                 // on click action
+                signUpViewModel.onSignUpButtonClick(navController)
             }
             Row (
                 modifier = Modifier.padding(top = 15.dp)
@@ -182,6 +186,11 @@ fun SignUpScreen() {
                     ),
                     modifier = Modifier.clickable {
                         // on login text click
+                        navController.navigate(Screens.Login.route){
+                            popUpTo(Screens.SignUp.route) {
+                                inclusive = true
+                            }
+                        }
                     }
                 )
             }

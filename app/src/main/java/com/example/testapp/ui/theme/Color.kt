@@ -12,6 +12,7 @@ val textLight = Color(0xFFFFFFFF)
 val textDark = Color(0xFF212325)
 val textDarkHint = Color(0xFF292B2D)
 val textHint = Color(0xFF91919F)
+val textDescriptionColor= Color(0xFF3A544F)
 
 val background = Color(0xFFFFFBFB)
 

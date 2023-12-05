@@ -19,24 +19,23 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.testapp.R
 import com.example.testapp.presentation.components.ButtonClickOn
 import com.example.testapp.presentation.components.PasswordEditText
 import com.example.testapp.presentation.components.PhoneEditText
-import com.example.testapp.presentation.mainScreens.auth.signUp.auth
+import com.example.testapp.presentation.navigation.Screens
 import com.example.testapp.ui.theme.componentsColor
 import com.example.testapp.ui.theme.textDark
 import com.example.testapp.ui.theme.textDarkHint
 import com.example.testapp.ui.theme.textHint
 
 
-@Preview(showSystemUi = true, showBackground = true)
 @Composable
-fun LoginScreen() {
-
+fun LoginScreen(navController: NavHostController, loginViewModel: LoginViewModel) {
+    val state = loginViewModel.state.value
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -78,20 +77,21 @@ fun LoginScreen() {
                 modifier = Modifier.padding(top = 15.dp)
             ) {
                 PhoneEditText(
-                    phoneNumber = auth.phoneNumber,
-                    isPhoneNumberError = auth.isErrorPhoneNumber,
-                    phoneNumberErrorMessage = auth.phoneNumberErrorMessage,
-                    onValueChange = {}
+                    phoneNumber = state.phoneNumber,
+                    isPhoneNumberError = state.isErrorPhoneNumber,
+                    phoneNumberErrorMessage = state.phoneNumberErrorMessage,
+                    onValueChange = {phone->loginViewModel.onPhoneNumberChange(phone)}
                 )
 
                 PasswordEditText(
-                    password = auth.password,
-                    isErrorPassword = auth.isErrorPassword,
-                    passwordErrorMessage = auth.passwordErrorMessage,
-                    showPassword = auth.showPassword,
-                    onValueChange ={}
+                    password = state.password,
+                    isErrorPassword = state.isErrorPassword,
+                    passwordErrorMessage = state.passwordErrorMessage,
+                    showPassword = state.showPassword,
+                    onValueChange ={password->loginViewModel.onPasswordChange(password)}
                 ) {
                     // on show password click
+                    loginViewModel.onIconButtonClick()
                 }
             }
 
@@ -106,6 +106,7 @@ fun LoginScreen() {
                 paddingValue = 30
             ) {
                 // on click action
+                loginViewModel.onLoginButtonClick(navController)
             }
             Row(
                 modifier = Modifier.padding(top = 15.dp)
@@ -125,6 +126,8 @@ fun LoginScreen() {
                     ),
                     modifier = Modifier.clickable {
                         // on sign up text click
+                        navController.navigate(Screens.SignUp.route)
+
                     }
                 )
             }

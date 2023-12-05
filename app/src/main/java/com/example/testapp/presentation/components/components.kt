@@ -48,7 +48,7 @@ fun MyText(id:Int,size:Int) {
             color = textLight,
             fontSize = size.sp,
             fontWeight = FontWeight.ExtraBold,
-            fontFamily = FontFamily(Font(R.font.montserrat)),
+            fontFamily = FontFamily(Font(R.font.montserratb)),
         ),
     )
 }
@@ -276,7 +276,7 @@ fun ButtonClickOn(buttonText:String,paddingValue:Int ,onButtonClick:() -> Unit )
         shape = RoundedCornerShape(16.dp)
 
     ){
-        Text(text = buttonText, fontSize = 10.sp, style = TextStyle(color = textLight))
+        Text(text = buttonText, fontSize = 12.sp, style = TextStyle(color = textLight))
     }
 }
 

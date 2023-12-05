@@ -19,12 +19,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.testapp.R
-import com.example.testapp.data.allCities
 import com.example.testapp.data.remote.dto.City
 import com.example.testapp.ui.theme.componentsColor
 import com.example.testapp.ui.theme.textDarkHint
@@ -71,17 +69,17 @@ fun CityCard(
                 style = TextStyle(
                     color = textDarkHint,
                     fontSize = 22.sp,
-                    fontWeight = FontWeight.ExtraBold,
-                    fontFamily = FontFamily(Font(R.font.montserrat)),
+                    fontWeight = FontWeight.W600,
+                    fontFamily = FontFamily(Font(R.font.montserratb)),
                 ),
             )
             Text(
                 text = "${city.numberOfReviews} Reviews",
                 style = TextStyle(
                     color = componentsColor,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.ExtraBold,
-                    fontFamily = FontFamily(Font(R.font.montserrat)),
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.W400,
+                    fontFamily = FontFamily(Font(R.font.montserratb)),
                 ),
             )
         }
