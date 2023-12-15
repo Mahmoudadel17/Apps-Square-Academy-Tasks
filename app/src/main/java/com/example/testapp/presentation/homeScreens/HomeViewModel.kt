@@ -53,7 +53,9 @@ class HomeViewModel @Inject constructor(private val repo:ApiRepository,private v
     }
 
     fun refresh(){
-        getAllCities()
+        if (_cities.value.isEmpty()){
+            getAllCities()
+        }
     }
     private fun checkNetworkAvailability() : Boolean {
         val networkInfo = connectivityManager.activeNetworkInfo

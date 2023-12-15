@@ -29,7 +29,7 @@ import com.example.testapp.ui.theme.textLight
 
 //@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun IntroScreen(navController:NavHostController) {
+fun IntroScreen(navController:NavHostController,introViewModel:IntroViewModel) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -77,13 +77,8 @@ fun IntroScreen(navController:NavHostController) {
             MyText(id =R.string.intro_vaction, size = 40)
 
             ButtonClickOn("Explore",15){
-                // on click action, go to sign up screen .
-                navController.navigate(Screens.SignUp.route){
-                    // if want to remove this screen from back stack
-//                    popUpTo(Screens.Intro.route) {
-//                        inclusive = true
-//                    }
-                }
+                // on click action.
+                introViewModel.explore(navController)
             }
         }
 

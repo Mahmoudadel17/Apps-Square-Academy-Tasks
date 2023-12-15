@@ -1,10 +1,14 @@
 package com.example.testapp.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import com.example.testapp.data.remote.ApiServices
+import com.example.testapp.data.remote.AuthApiServices
 import com.example.testapp.data.repository.ApiRepositoryImpl
+import com.example.testapp.data.repository.AuthApiRepositoryImpl
 import com.example.testapp.domain.ApiRepository
+import com.example.testapp.domain.AuthApiRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,6 +23,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
+    // general Api services
     @Provides
     @Singleton
     fun providesRetrofit (): Retrofit = Retrofit.Builder().baseUrl("https://aspen-73f2b-default-rtdb.firebaseio.com/").addConverterFactory(
@@ -28,10 +33,40 @@ object AppModule {
     @Singleton
     fun providesApiServices () : ApiServices = providesRetrofit().create(ApiServices::class.java)
 
+
     @Provides
     @Singleton
     fun providesApiRepository():ApiRepository = ApiRepositoryImpl(providesApiServices())
 
+    // -------------------------------------------------------------------------------------------------
+    // Authentication Api Services
+    @Provides
+    @Singleton
+    fun providesRetrofitAuth (): Retrofit = Retrofit.Builder().baseUrl("https://apps-square.com/").addConverterFactory(
+        GsonConverterFactory.create()).build()
+
+
+    @Provides
+    @Singleton
+    fun providesAuthApiServices () : AuthApiServices = providesRetrofitAuth().create(AuthApiServices::class.java)
+
+    @Provides
+    @Singleton
+    fun providesAuthApiRepository(): AuthApiRepository = AuthApiRepositoryImpl(providesAuthApiServices())
+
+    // -------------------------------------------------------------------------------------------------
+
+
+    @Provides
+    @Singleton
+    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences =
+        context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
+
+
+    @Provides
+    @Singleton
+    fun provideTokenManager(sharedPreferences: SharedPreferences): TokenManager =
+        TokenManager(sharedPreferences)
 
     @Provides
     @Singleton

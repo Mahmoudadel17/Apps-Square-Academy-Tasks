@@ -11,6 +11,7 @@ import com.example.testapp.presentation.homeScreens.CommingSoon
 import com.example.testapp.presentation.homeScreens.HomeScreen
 import com.example.testapp.presentation.homeScreens.HomeViewModel
 import com.example.testapp.presentation.mainScreens.IntroScreen
+import com.example.testapp.presentation.mainScreens.IntroViewModel
 import com.example.testapp.presentation.mainScreens.auth.login.LoginScreen
 import com.example.testapp.presentation.mainScreens.auth.login.LoginViewModel
 import com.example.testapp.presentation.mainScreens.auth.signUp.SignUpScreen
@@ -19,6 +20,7 @@ import com.example.testapp.presentation.mainScreens.auth.signUp.SignUpViewModel
 
 @Composable
 fun AppNavigation(
+    introViewModel: IntroViewModel,
     signUpViewModel: SignUpViewModel,
     loginViewModel: LoginViewModel,
     homeViewModel: HomeViewModel
@@ -27,7 +29,7 @@ fun AppNavigation(
 
     NavHost(navController = navController, startDestination = Screens.Intro.route){
         composable(route = Screens.Intro.route){
-            IntroScreen(navController = navController)
+            IntroScreen(navController,introViewModel)
         }
         composable(route = Screens.SignUp.route){
             SignUpScreen(navController,signUpViewModel)

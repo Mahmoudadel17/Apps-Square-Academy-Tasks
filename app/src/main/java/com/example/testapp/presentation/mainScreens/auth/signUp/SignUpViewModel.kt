@@ -6,10 +6,24 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
+import com.example.testapp.data.remote.dto.SignUpRequestBody
+import com.example.testapp.di.TokenManager
+import com.example.testapp.domain.AuthApiRepository
 import com.example.testapp.presentation.navigation.Screens
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class SignUpViewModel : ViewModel() {
+
+@HiltViewModel
+class SignUpViewModel  @Inject constructor(
+    private val authApiRepository: AuthApiRepository,
+    private val tokenManager: TokenManager)
+    : ViewModel() {
     private var _state by mutableStateOf(
         SignUpScreenState(
             phoneNumber = "",
@@ -108,11 +122,42 @@ class SignUpViewModel : ViewModel() {
 
         if (_state.password.isNotEmpty() && _state.email.isNotEmpty()
             && _state.city.isNotEmpty() && _state.phoneNumber.isNotEmpty()){
+
+//            // try to sign up.
+//            viewModelScope.launch(Dispatchers.IO){
+//               val signUpResponse =  authApiRepository.signUp(
+//                    SignUpRequestBody(
+//                    _state.phoneNumber,
+//                    _state.email,
+//                    _state.city,
+//                    _state.password
+//                ))
+//
+//                if (signUpResponse.token.isNotEmpty()){
+//                    tokenManager.saveToken(signUpResponse.token)
+//
+//                    // go to home screen after save token in sharedPreferences
+//                    withContext(Dispatchers.Main){
+//                        navController.navigate(Screens.Home.route){
+//                            popUpTo(Screens.SignUp.route) {
+//                                inclusive = true
+//                            }
+//                        }
+//                    }
+//                }
+//
+//            }
+
+            // save token as example to save user
+            tokenManager.saveToken("token")
             navController.navigate(Screens.Home.route){
                 popUpTo(Screens.SignUp.route) {
                     inclusive = true
                 }
             }
+
+
+
         }
 
     }
