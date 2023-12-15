@@ -3,6 +3,7 @@ package com.example.testapp.di
 import android.content.Context
 import android.content.SharedPreferences
 import android.net.ConnectivityManager
+import com.example.testapp.data.Constants
 import com.example.testapp.data.remote.ApiServices
 import com.example.testapp.data.remote.AuthApiServices
 import com.example.testapp.data.repository.ApiRepositoryImpl
@@ -26,7 +27,7 @@ object AppModule {
     // general Api services
     @Provides
     @Singleton
-    fun providesRetrofit (): Retrofit = Retrofit.Builder().baseUrl("https://aspen-73f2b-default-rtdb.firebaseio.com/").addConverterFactory(
+    fun providesRetrofit (): Retrofit = Retrofit.Builder().baseUrl(Constants.ApiServicesUrlBase).addConverterFactory(
         GsonConverterFactory.create()).build()
 
     @Provides
@@ -42,7 +43,7 @@ object AppModule {
     // Authentication Api Services
     @Provides
     @Singleton
-    fun providesRetrofitAuth (): Retrofit = Retrofit.Builder().baseUrl("https://apps-square.com/").addConverterFactory(
+    fun providesRetrofitAuth (): Retrofit = Retrofit.Builder().baseUrl(Constants.AuthApiServicesUrlBase).addConverterFactory(
         GsonConverterFactory.create()).build()
 
 
@@ -60,7 +61,7 @@ object AppModule {
     @Provides
     @Singleton
     fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences =
-        context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
+        context.getSharedPreferences(Constants.SharedPreferences_KEY, Context.MODE_PRIVATE)
 
 
     @Provides
