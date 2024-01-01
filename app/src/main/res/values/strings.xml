@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">CimaCorner</string>
+    <string name="cimacorner">CimaCorner</string>
+    <string name="title_activity_home">HomeActivity</string>
+</resources>
