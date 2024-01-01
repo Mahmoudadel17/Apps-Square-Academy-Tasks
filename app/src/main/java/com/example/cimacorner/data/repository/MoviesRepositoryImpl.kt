@@ -27,17 +27,23 @@ class MoviesRepositoryImpl @Inject constructor(
 
 
     override suspend fun getAllMoviesList() : StateFlow<List<Movie>>{
-        val categoriesList = MutableStateFlow(emptyList<Movie>())
+        val allMovies = MutableStateFlow(emptyList<Movie>())
         val response = api.getAllMoviesList(apiKey)
         if (response.isSuccessful){
             val responseBody = response.body()?.movies
-            categoriesList.value = responseBody !!
+            allMovies.value = responseBody !!
         }
-        return categoriesList
+        return allMovies
     }
 
     override suspend fun getMoviesCategoryList(categoryId: Int): StateFlow<List<Movie>> {
-        TODO("Not yet implemented")
+        val categoryMovies = MutableStateFlow(emptyList<Movie>())
+        val response = api.getMoviesCategoryList(apiKey,categoryId)
+        if (response.isSuccessful){
+            val responseBody = response.body()?.movies
+            categoryMovies.value = responseBody !!
+        }
+        return categoryMovies
     }
 
 }

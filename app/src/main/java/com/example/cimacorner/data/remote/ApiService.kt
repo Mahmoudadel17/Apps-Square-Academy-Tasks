@@ -12,7 +12,7 @@ interface ApiService {
     @GET("genre/movie/list")
     suspend fun getMoviesCategories(@Query("api_key") ApiKey: String): Response<CategoriesResponse>
 
-    @GET("trending/all/week")
+    @GET("trending/movie/week")
     suspend fun getAllMoviesList(@Query("api_key") ApiKey: String): Response<MoviesResponse>
 
     @GET("discover/movie")

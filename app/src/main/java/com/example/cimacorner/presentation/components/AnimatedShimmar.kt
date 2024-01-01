@@ -66,7 +66,7 @@ fun ShimmerGridMovies() {
     LazyVerticalGrid(
         // Set the number of columns in the grid
         columns = GridCells.Fixed(2),
-        contentPadding = PaddingValues(12.dp)
+        contentPadding = PaddingValues(2.dp)
     ) {
         items(10){ movie ->
             ShimmerImageCard(brush = brush)
@@ -80,7 +80,7 @@ fun ShimmerImageCard(brush: Brush) {
     Spacer(
         modifier = Modifier
             .height(280.dp)
-            .width(220.dp)
+            .width(240.dp)
             .padding(8.dp)
             .shadow(
                 elevation = 16.dp,

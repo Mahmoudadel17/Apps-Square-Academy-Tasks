@@ -10,15 +10,16 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.cimacorner.presentation.Home.HomeScreen
+import com.example.cimacorner.presentation.Home.HomeScreenViewModel
 
 @Composable
-fun AppNavigation() {
+fun AppNavigation(homeScreenViewModel: HomeScreenViewModel) {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = Screens.Home.route){
 
         composable(route = Screens.Home.route){
-            HomeScreen()
+            HomeScreen(homeScreenViewModel)
         }
 
         composable(route = "${Screens.Movie.route}/{movieId}",arguments = listOf(

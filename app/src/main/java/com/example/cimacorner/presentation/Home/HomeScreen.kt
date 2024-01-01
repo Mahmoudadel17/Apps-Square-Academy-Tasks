@@ -22,8 +22,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,7 +36,11 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat.finishAffinity
+import com.example.cimacorner.data.remote.dto.Category
+import com.example.cimacorner.data.remote.dto.Movie
+import com.example.cimacorner.presentation.components.MoviesGridList
 import com.example.cimacorner.presentation.components.SearchAppBar
+import com.example.cimacorner.presentation.components.ShimmerGridMovies
 import com.example.cimacorner.ui.theme.BackgroundColor
 import com.example.cimacorner.ui.theme.DarkComponentColor1
 import com.example.cimacorner.ui.theme.RedComponentColor3
@@ -42,22 +50,28 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun HomeScreen() {
+fun HomeScreen(homeScreenViewModel: HomeScreenViewModel){
     var doubleBackToExitPressedOnce = false
     val activity = LocalOnBackPressedDispatcherOwner.current as ComponentActivity
     val context = LocalContext.current
 
+    val tabItems = homeScreenViewModel.tabList.collectAsState().value
+    val allMovies = homeScreenViewModel.movieList.collectAsState().value
+    val filteredMovies = homeScreenViewModel.movieListFiltered.collectAsState().value
+    val filteredMoviesReady = homeScreenViewModel.movieListFilteredReady.collectAsState().value
 
-    val tabItem = listOf("All","Action","Comedy","All","Action","Comedy")
+
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
 
 
+    // State to control the visibility of ShimmerGridMovies()
+    var shimmerVisible by remember { mutableStateOf(true) }
 
 
     Scaffold (
@@ -75,7 +89,7 @@ fun HomeScreen() {
     ){
         Box(modifier = Modifier.padding(it)){
             HorizontalPager(
-                count = tabItem.size, state = pagerState,
+                count = tabItems.size, state = pagerState,
                 modifier = Modifier
                     .fillMaxWidth(),
                 verticalAlignment = Alignment.Top,
@@ -86,6 +100,38 @@ fun HomeScreen() {
                         .fillMaxWidth()
                         .padding(top = 50.dp)
                 ) {
+                    // on tab selected or swap using HorizontalPager
+                    // Use LaunchedEffect to show ShimmerGridMovies() for 2 seconds
+
+                    LaunchedEffect(index) {
+                        shimmerVisible = true
+                        delay(1000) // 1 seconds delay
+                        shimmerVisible = false
+                    }
+                    // check if current tab is all or filter.
+                    if (tabItems[index].id==-1){
+                        if (shimmerVisible || allMovies.isEmpty() ) {
+                            // Show ShimmerGridMovies() when shimmerVisible is true or list empty
+                            ShimmerGridMovies()
+                        } else {
+                            // Show MoviesGridList() when shimmerVisible is false or list not empty
+                            MoviesGridList(allMovies)
+                        }
+
+                    }else{
+                       LaunchedEffect(index){
+                           homeScreenViewModel.onSelectingTab(tabItems[index])
+                       }
+                        if (shimmerVisible || !filteredMoviesReady ) {
+                            // Show ShimmerGridMovies() when shimmerVisible is true or list empty
+                            ShimmerGridMovies()
+                        } else {
+                            // Show MoviesGridList() when shimmerVisible is false or list has been filtered complete.
+                            MoviesGridList(filteredMovies)
+                        }
+
+                    }
+
 
                 }
             }
@@ -110,7 +156,7 @@ fun HomeScreen() {
                     )
                 }
             ) {
-                tabItem.forEachIndexed { index, screen ->
+                tabItems.forEachIndexed { index, category ->
                     val color = remember {
                         Animatable(RedComponentColor3)
                     }
@@ -120,7 +166,7 @@ fun HomeScreen() {
                     Tab(
                         text = {
                             Text(
-                                screen,
+                                category.name,
                                 style = if (pagerState.currentPage == index) TextStyle(
                                     color = TextColor,
                                     fontSize = 18.sp
@@ -135,8 +181,9 @@ fun HomeScreen() {
                         modifier = Modifier
                             .padding(end = 4.dp)
                             .background(
-                            color = color.value,
-                            shape = RoundedCornerShape(24.dp)),
+                                color = color.value,
+                                shape = RoundedCornerShape(24.dp)
+                            ),
                         onClick = {
                             coroutineScope.launch {
                                 pagerState.animateScrollToPage(index)

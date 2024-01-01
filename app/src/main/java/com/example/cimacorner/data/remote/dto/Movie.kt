@@ -3,8 +3,6 @@ package com.example.cimacorner.data.remote.dto
 import com.google.gson.annotations.SerializedName
 
 data class Movie(
-    @SerializedName("genre_ids")
-    val idCategoriesList : List<Int>,
     @SerializedName("title")
     val name: String,
     @SerializedName("poster_path")

@@ -5,21 +5,17 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.cimacorner.data.moviess
 import com.example.cimacorner.data.remote.dto.Movie
 
 
-
-@Preview(showBackground = true)
 @Composable
-fun MoviesGridList(movies: List<Movie> = moviess) {
+fun MoviesGridList(movies: List<Movie> ) {
 
     LazyVerticalGrid(
         // Set the number of columns in the grid
         columns = GridCells.Fixed(2),
-        contentPadding = PaddingValues(12.dp)
+        contentPadding = PaddingValues(2.dp)
     ) {
         items(movies){ movie ->
                 MovieCard(movie)
@@ -31,7 +27,7 @@ fun MoviesGridList(movies: List<Movie> = moviess) {
 
 @Composable
 fun MovieCard(movie: Movie) {
-    ImageCard(posterLink = movie.poster, title = movie.name)
+    ImageCard(posterLink = movie.poster, title = movie.name, yearOfProduction = movie.yearOfProduction)
 }
 
 

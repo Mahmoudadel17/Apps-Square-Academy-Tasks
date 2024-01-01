@@ -30,6 +30,10 @@ class HomeScreenViewModel @Inject constructor(
     private val _movieListFiltered = MutableStateFlow(emptyList<Movie>())
     val movieListFiltered: StateFlow<List<Movie>> = _movieListFiltered
 
+    private val _movieListFilteredReady = MutableStateFlow(false)
+    val movieListFilteredReady: StateFlow<Boolean> = _movieListFilteredReady
+
+
 
 
     init {
@@ -67,23 +71,14 @@ class HomeScreenViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             moviesCategoryListUseCase.getMoviesCategoryList(id).collect{
                 _movieListFiltered.value = it
+                _movieListFilteredReady.value = true
             }
         }
     }
 
-    suspend fun onSelectingTab(category: Category):  StateFlow<List<Movie>>{
-        if (category.id == -1){
-            return  _movieList
-        }
-
-        // Use async to run getMoviesCategoryList concurrently
-        val asyncResult = viewModelScope.async {
-            getMoviesCategoryList(category.id)
-            _movieListFiltered
-        }
-
-        // Wait for the async result and return the StateFlow
-        return asyncResult.await()
+     fun onSelectingTab(category: Category){
+        _movieListFilteredReady.value = false
+        getMoviesCategoryList(category.id)
     }
 
 
