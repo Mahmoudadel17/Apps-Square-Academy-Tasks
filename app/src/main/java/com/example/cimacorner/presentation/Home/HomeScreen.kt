@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat.finishAffinity
 import com.example.cimacorner.presentation.components.SearchAppBar
 import com.example.cimacorner.ui.theme.BackgroundColor
-import com.example.cimacorner.ui.theme.DarkComponentColor
+import com.example.cimacorner.ui.theme.DarkComponentColor1
 import com.example.cimacorner.ui.theme.RedComponentColor3
 import com.example.cimacorner.ui.theme.RedTextColor
 import com.example.cimacorner.ui.theme.TextColor
@@ -86,12 +86,7 @@ fun HomeScreen() {
                         .fillMaxWidth()
                         .padding(top = 50.dp)
                 ) {
-//                    AppNavigation(
-//                        tabItem[index],
-//                        favoritesViewModel,
-//                        convertViewModel,
-//                        compareViewModel
-//                    )
+
                 }
             }
 
@@ -120,7 +115,7 @@ fun HomeScreen() {
                         Animatable(RedComponentColor3)
                     }
                     LaunchedEffect(pagerState.currentPage == index) {
-                        color.animateTo(if (pagerState.currentPage == index) RedComponentColor3 else DarkComponentColor)
+                        color.animateTo(if (pagerState.currentPage == index) RedComponentColor3 else DarkComponentColor1)
                     }
                     Tab(
                         text = {

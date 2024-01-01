@@ -2,6 +2,31 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="ImageCardPreview">
+        <State />
+      </entry>
+      <entry key="MoviesGridList">
+        <State>
+          <runningDeviceTargetSelectedWithDropDown>
+            <Target>
+              <type value="RUNNING_DEVICE_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="C:\Users\PC\.android\avd\Pixel_6_Pro_API_31.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </runningDeviceTargetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-01-01T18:19:10.849463900Z" />
+        </State>
+      </entry>
+      <entry key="ShimmerGridItemDarkPreview">
+        <State />
+      </entry>
+      <entry key="ShimmerGridItemPreview">
+        <State />
+      </entry>
       <entry key="SplashScreen">
         <State>
           <targetSelectedWithDropDown>

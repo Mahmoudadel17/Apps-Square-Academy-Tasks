@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 interface MoviesRepository
 {
 suspend fun getMovieCategories() : StateFlow<List<Category>>
-suspend fun getMoviesCategoryList(id : Int) : StateFlow<List<Movie>>
+suspend fun getAllMoviesList() : StateFlow<List<Movie>>
+suspend fun getMoviesCategoryList(categoryId:Int) : StateFlow<List<Movie>>
 
 }
