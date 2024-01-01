@@ -64,7 +64,12 @@ fun HomeScreen() {
         containerColor = BackgroundColor,
         modifier = Modifier.padding(10.dp),
         topBar = {
-            SearchAppBar(text = "", onClicked = {}, onSearchClicked = {}, onTextChange = {})
+            SearchAppBar(
+                text = "",
+                onClicked = {},
+                onSearchClicked = {},
+                onTextChange = {}
+            )
 
         }
     ){
