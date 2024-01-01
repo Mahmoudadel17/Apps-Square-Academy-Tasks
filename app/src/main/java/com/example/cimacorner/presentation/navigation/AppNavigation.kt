@@ -10,7 +10,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.cimacorner.presentation.Home.HomeScreen
-import com.example.cimacorner.presentation.SplashScreen
 
 @Composable
 fun AppNavigation() {

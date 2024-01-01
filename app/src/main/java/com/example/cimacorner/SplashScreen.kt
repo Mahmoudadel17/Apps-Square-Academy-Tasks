@@ -1,4 +1,4 @@
-package com.example.cimacorner.presentation
+package com.example.cimacorner
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box

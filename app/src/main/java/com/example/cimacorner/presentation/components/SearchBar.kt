@@ -1,4 +1,4 @@
-package com.example.cimacorner.presentation
+package com.example.cimacorner.presentation.components
 
 
 import androidx.compose.foundation.clickable
@@ -18,22 +18,28 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.example.cimacorner.ui.theme.RedComponentColor3
+import com.example.cimacorner.ui.theme.TextColor
 
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchAppBar(
     text: String,
-    onClicked: () -> Unit = {},
-    onTextChange: (String) -> Unit = {},
-    onSearchClicked: (String) -> Unit = {},
+    onClicked: () -> Unit ,
+    onTextChange: (String) -> Unit,
+    onSearchClicked: (String) -> Unit ,
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -56,7 +62,7 @@ fun SearchAppBar(
                     modifier = Modifier
                         .alpha(ContentAlpha.medium),
                     text = "Search here...",
-                    color = Color.White
+                    color = TextColor
                 )
             },
             textStyle = TextStyle(
@@ -72,7 +78,7 @@ fun SearchAppBar(
                     Icon(
                         imageVector = Icons.Default.Search,
                         contentDescription = "Search Icon",
-                        tint = Color.White
+                        tint = TextColor
                     )
                 }
             },
@@ -83,11 +89,13 @@ fun SearchAppBar(
             keyboardActions = KeyboardActions(
                 onSearch = {
                     onSearchClicked(text)
+                    keyboardController?.hide()
                 }
+
             ),
             colors = TextFieldDefaults.textFieldColors(
                 backgroundColor = Color.Transparent,
-                cursorColor = Color.White.copy(alpha = ContentAlpha.medium)
+                cursorColor = TextColor.copy(alpha = ContentAlpha.medium)
             ))
     }
 }
