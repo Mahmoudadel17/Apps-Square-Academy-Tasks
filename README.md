@@ -64,17 +64,23 @@ CimaCorner is an app for presenting movies, including categorization, overviews,
 width="200"
     hspace="10" vspace="10">](/screenShots/Splash.PNG)
 
-[<img src="/screenShots/Loading.PNG" align="center"
+[<img src="/screenShots/Loading.PNG" align="left"
 width="200"
     hspace="10" vspace="10">](/screenShots/Loading.PNG)
     
-[<img src="/screenShots/Home.PNG" align="left"
+[<img src="/screenShots/Home.PNG" align="center"
 width="200"
     hspace="10" vspace="10">](/screenShots/Home.PNG)
 
-[<img src="/screenShots/Search.PNG" align="center"
+[<img src="/screenShots/Search.PNG" align="left"
 width="200"
     hspace="10" vspace="10">](/screenShots/Search.PNG)
+
+[<img src="/screenShots/NoInternet.PNG" align="center"
+width="200"
+    hspace="10" vspace="10">](/screenShots/NoInternet.PNG)
+
+
 
 
 
