@@ -1,17 +1,22 @@
 package com.example.cimacorner.presentation.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -25,11 +30,16 @@ import com.example.cimacorner.ui.theme.DarkComponentColor2
 
 @Composable
 fun ImageCard(
-    posterLink:String,
+    posterLink:String?="",
     title:String,
     yearOfProduction:String,
     onMovieClick:()->Unit
     ) {
+
+    val brush = animatedShimmer()
+
+
+
     Card(
         modifier = Modifier
             .padding(6.dp)
@@ -50,8 +60,14 @@ fun ImageCard(
             AsyncImage(
                 model = "${Constants.baseUrlPoster}$posterLink",
                 contentDescription = "Image",
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(brush = brush)
+                ,
+                contentScale = ContentScale.Crop,
+
+
+
             )
 
             Column (
@@ -77,7 +93,7 @@ fun ImageCard(
 
 
 @Composable
-fun DetailsImageCard(posterLink: String,height:Int) {
+fun DetailsImageCard(posterLink: String?="",height:Int) {
     Surface{
         Column(modifier = Modifier.fillMaxWidth()) {
             AsyncImage(

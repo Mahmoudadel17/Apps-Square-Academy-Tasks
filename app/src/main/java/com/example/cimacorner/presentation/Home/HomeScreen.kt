@@ -7,6 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.animation.Animatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -41,6 +42,7 @@ import com.example.cimacorner.presentation.components.MoviesGridList
 import com.example.cimacorner.presentation.components.NoInternetScreen
 import com.example.cimacorner.presentation.components.SearchAppBar
 import com.example.cimacorner.presentation.components.ShimmerGridMovies
+import com.example.cimacorner.presentation.navigation.Screens
 import com.example.cimacorner.ui.theme.BackgroundColor
 import com.example.cimacorner.ui.theme.DarkComponentColor1
 import com.example.cimacorner.ui.theme.RedComponentColor3
@@ -83,9 +85,9 @@ fun HomeScreen(homeScreenViewModel: HomeScreenViewModel, navController: NavHostC
         topBar = {
             SearchAppBar(
                 text = "",
-                onClicked = {},
-                onSearchClicked = {},
-                onTextChange = {}
+                onClicked = {
+                            navController.navigate(Screens.Search.route)
+                },
             )
 
         }
@@ -105,6 +107,7 @@ fun HomeScreen(homeScreenViewModel: HomeScreenViewModel, navController: NavHostC
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 50.dp)
+
                     ) {
                         // on tab selected or swap using HorizontalPager
                         // Use LaunchedEffect to show ShimmerGridMovies() for 2 seconds
@@ -121,7 +124,15 @@ fun HomeScreen(homeScreenViewModel: HomeScreenViewModel, navController: NavHostC
                                 ShimmerGridMovies()
                             } else {
                                 // Show MoviesGridList() when shimmerVisible is false or list not empty
-                                MoviesGridList(allMovies,navController){}
+                                MoviesGridList(allMovies,navController){
+                                    coroutineScope.launch {
+                                        tween<Float>(600)
+                                        pagerState.animateScrollToPage(
+                                            page = (pagerState.currentPage + 1) % (pagerState.pageCount)
+                                        )
+                                    }
+
+                                }
                             }
 
                         }else{
@@ -133,7 +144,14 @@ fun HomeScreen(homeScreenViewModel: HomeScreenViewModel, navController: NavHostC
                                 ShimmerGridMovies()
                             } else {
                                 // Show MoviesGridList() when shimmerVisible is false or list has been filtered complete.
-                                MoviesGridList(filteredMovies,navController){}
+                                MoviesGridList(filteredMovies,navController){
+                                    coroutineScope.launch {
+                                        tween<Float>(600)
+                                        pagerState.animateScrollToPage(
+                                            page = (pagerState.currentPage + 1) % (pagerState.pageCount)
+                                        )
+                                    }
+                                }
                             }
 
                         }

@@ -9,19 +9,19 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import com.example.cimacorner.di.App
 import com.example.cimacorner.domain.network.ConnectivityObserver
 import com.example.cimacorner.domain.network.NetworkConnectivityObserver
 import com.example.cimacorner.presentation.Home.HomeScreenViewModel
 import com.example.cimacorner.presentation.navigation.AppNavigation
+import com.example.cimacorner.presentation.search.SearchScreenViewModel
 import com.example.cimacorner.ui.theme.BackgroundColor
 import com.example.cimacorner.ui.theme.CimaCornerTheme
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeActivity : ComponentActivity() {
     private val homeScreenViewModel by viewModels<HomeScreenViewModel>()
+    private val searchScreenViewModel by viewModels<SearchScreenViewModel>()
 
     private lateinit var connectivityObserver: ConnectivityObserver
 
@@ -35,9 +35,9 @@ class HomeActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = BackgroundColor
                 ) {
-                   AppNavigation(homeScreenViewModel)
+                   AppNavigation(homeScreenViewModel,searchScreenViewModel)
 
-                    // handel on internet available load list
+                    // handel on internet available to load list
                     val status by connectivityObserver.observe().collectAsState(
                         initial = ConnectivityObserver.Status.Unavailable
                     )

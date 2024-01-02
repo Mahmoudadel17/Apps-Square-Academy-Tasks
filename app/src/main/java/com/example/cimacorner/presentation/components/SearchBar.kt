@@ -34,9 +34,10 @@ import com.example.cimacorner.ui.theme.TextColor
 @Composable
 fun SearchAppBar(
     text: String,
-    onClicked: () -> Unit ,
-    onTextChange: (String) -> Unit,
-    onSearchClicked: (String) -> Unit ,
+    enabl : Boolean = false,
+    onClicked: () -> Unit = {} ,
+    onTextChange: (String) -> Unit = {},
+    onSearchClicked: (String) -> Unit = {},
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -57,6 +58,7 @@ fun SearchAppBar(
             onValueChange = {
                 onTextChange(it)
             },
+            enabled = enabl,
             placeholder = {
                 Text(
                     modifier = Modifier

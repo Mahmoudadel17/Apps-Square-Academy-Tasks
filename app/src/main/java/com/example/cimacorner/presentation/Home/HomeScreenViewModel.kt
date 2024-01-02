@@ -1,17 +1,16 @@
 package com.example.cimacorner.presentation.Home
 
 import android.net.ConnectivityManager
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cimacorner.data.allCategory
-import com.example.cimacorner.data.remote.dto.*
+import com.example.cimacorner.data.remote.dto.Category
+import com.example.cimacorner.data.remote.dto.Movie
 import com.example.cimacorner.domain.usecase.movies.GetMovieCategoriesUseCase
 import com.example.cimacorner.domain.usecase.movies.GetMoviesCategoryListUseCase
 import com.example.cimacorner.domain.usecase.movies.GetMoviesListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -12,7 +13,8 @@ import com.example.cimacorner.presentation.navigation.Screens
 
 
 @Composable
-fun MoviesGridList(movies: List<Movie>, navController: NavHostController,onEndScroll:()->Unit) {
+fun MoviesGridList(movies: List<Movie>, navController: NavHostController,onEndScroll:()->Unit={}) {
+
 
     LazyVerticalGrid(
         // Set the number of columns in the grid
@@ -28,8 +30,9 @@ fun MoviesGridList(movies: List<Movie>, navController: NavHostController,onEndSc
                     navController.navigate(Screens.Details.route)
 
                 }
-            if (movie == movies.last()){
 
+            if (movie == movies.last()){
+                onEndScroll()
             }
 
         }

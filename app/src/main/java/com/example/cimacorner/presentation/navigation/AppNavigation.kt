@@ -4,18 +4,21 @@ package com.example.cimacorner.presentation.navigation
 
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.example.cimacorner.data.remote.dto.Movie
 import com.example.cimacorner.presentation.Home.HomeScreen
 import com.example.cimacorner.presentation.Home.HomeScreenViewModel
 import com.example.cimacorner.presentation.details.DetailsScreen
+import com.example.cimacorner.presentation.search.SearchScreen
+import com.example.cimacorner.presentation.search.SearchScreenViewModel
 
 @Composable
-fun AppNavigation(homeScreenViewModel: HomeScreenViewModel) {
+fun AppNavigation(
+    homeScreenViewModel: HomeScreenViewModel,
+    searchScreenViewModel: SearchScreenViewModel
+) {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = Screens.Home.route){
@@ -35,7 +38,7 @@ fun AppNavigation(homeScreenViewModel: HomeScreenViewModel) {
 
 
         composable(route = Screens.Search.route){
-
+            SearchScreen(searchScreenViewModel,navController)
         }
     }
 }
