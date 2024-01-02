@@ -1,5 +1,6 @@
 package com.example.cimacorner.data.repository
 
+import android.util.Log
 import com.example.cimacorner.data.remote.ApiService
 import com.example.cimacorner.data.remote.dto.Category
 import com.example.cimacorner.data.remote.dto.Movie
@@ -14,13 +15,20 @@ class MoviesRepositoryImpl @Inject constructor(
     override suspend fun getMovieCategories() : StateFlow<List<Category>>{
 
         val categoriesList = MutableStateFlow(emptyList<Category>())
+        try {
+            val response = api.getMoviesCategories(apiKey)
 
-        val response = api.getMoviesCategories(apiKey)
+            if (response.isSuccessful){
 
-        if (response.isSuccessful){
-            val responseBody = response.body()?.categoriesList
-            categoriesList.value = responseBody !!
+                val responseBody = response.body()?.categoriesList
+                categoriesList.value = responseBody !!
+            }
+        }catch (e: Exception) {
+            e.printStackTrace()
+            return categoriesList
         }
+
+
         return categoriesList
     }
 
@@ -28,21 +36,35 @@ class MoviesRepositoryImpl @Inject constructor(
 
     override suspend fun getAllMoviesList() : StateFlow<List<Movie>>{
         val allMovies = MutableStateFlow(emptyList<Movie>())
-        val response = api.getAllMoviesList(apiKey)
-        if (response.isSuccessful){
-            val responseBody = response.body()?.movies
-            allMovies.value = responseBody !!
+
+        try {
+            val response = api.getAllMoviesList(apiKey)
+            if (response.isSuccessful){
+
+                val responseBody = response.body()?.movies
+                allMovies.value = responseBody !!
+            }
+        }catch (e: Exception) {
+            e.printStackTrace()
+            return allMovies
         }
         return allMovies
     }
 
     override suspend fun getMoviesCategoryList(categoryId: Int): StateFlow<List<Movie>> {
+
         val categoryMovies = MutableStateFlow(emptyList<Movie>())
-        val response = api.getMoviesCategoryList(apiKey,categoryId)
-        if (response.isSuccessful){
-            val responseBody = response.body()?.movies
-            categoryMovies.value = responseBody !!
+        try {
+            val response = api.getMoviesCategoryList(apiKey,categoryId)
+            if (response.isSuccessful){
+                val responseBody = response.body()?.movies
+                categoryMovies.value = responseBody !!
+            }
+        }catch (e: Exception) {
+            e.printStackTrace()
+            return categoryMovies
         }
+
         return categoryMovies
     }
 

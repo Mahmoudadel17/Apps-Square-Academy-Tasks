@@ -1,7 +1,11 @@
 package com.example.cimacorner.data.remote.dto
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+
+@Parcelize
 data class Movie(
     @SerializedName("title")
     val name: String,
@@ -13,4 +17,6 @@ data class Movie(
     val yearOfProduction : String,
     @SerializedName("overview")
     val overView : String
-)
+): Parcelable
+
+

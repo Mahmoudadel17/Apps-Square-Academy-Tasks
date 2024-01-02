@@ -12,15 +12,20 @@ class SearchRepositoryImpl @Inject constructor(
     SearchRepository {
     override suspend fun getSearchedItem(item : String) : StateFlow<List<Movie>> {
 
-        val searchedItem = MutableStateFlow(emptyList<Movie>())
+        val searchedItems = MutableStateFlow(emptyList<Movie>())
+        try {
+            val response = api.getSearchedItem(apiKey,item)
 
-        val response = api.getSearchedItem(apiKey,item)
-
-        if (response.isSuccessful){
-            val responseBody = response.body()?.movies
-            searchedItem.value = responseBody !!
+            if (response.isSuccessful){
+                val responseBody = response.body()?.movies
+                searchedItems.value = responseBody !!
+            }
+        }catch (e: Exception) {
+            e.printStackTrace()
+            return searchedItems
         }
-        return searchedItem
+
+        return searchedItems
     }
 
 }

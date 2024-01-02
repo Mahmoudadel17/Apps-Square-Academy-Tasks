@@ -1,5 +1,6 @@
 package com.example.cimacorner.domain.usecase.movies
 
+import android.util.Log
 import com.example.cimacorner.data.remote.dto.Category
 import com.example.cimacorner.domain.repository.MoviesRepository
 import kotlinx.coroutines.flow.StateFlow

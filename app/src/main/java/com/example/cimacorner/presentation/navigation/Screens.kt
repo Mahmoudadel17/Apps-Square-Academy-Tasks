@@ -6,8 +6,8 @@ sealed class Screens(val route:String){
     object Home:Screens(
         route = "home"
     )
-    object Movie:Screens(
-        route = "movie"
+    object Details:Screens(
+        route = "details"
     )
     object Search:Screens(
         route = "search"

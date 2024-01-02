@@ -2,6 +2,9 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="DetailsScreen">
+        <State />
+      </entry>
       <entry key="ImageCardPreview">
         <State />
       </entry>
@@ -26,22 +29,6 @@
       </entry>
       <entry key="ShimmerGridItemPreview">
         <State />
-      </entry>
-      <entry key="SplashScreen">
-        <State>
-          <targetSelectedWithDropDown>
-            <Target>
-              <type value="QUICK_BOOT_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\PC\.android\avd\Pixel_6_Pro_API_31.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-01-01T02:32:16.047595900Z" />
-        </State>
       </entry>
       <entry key="app">
         <State />
