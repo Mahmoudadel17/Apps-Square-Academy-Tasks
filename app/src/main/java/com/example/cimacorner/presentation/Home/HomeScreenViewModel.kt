@@ -95,8 +95,11 @@ class HomeScreenViewModel @Inject constructor(
 
      fun onSelectingTab(category: Category){
          if (checkNetworkAvailability()){
-             _internetAvailable.value = true
-             getMoviesCategoryList(category.id)
+             // check id for category not (All Category).
+            if (category.id!=-1){
+                _internetAvailable.value = true
+                getMoviesCategoryList(category.id)
+            }
          }else{
              viewModelScope.launch {
                  delay(1000)

@@ -63,6 +63,8 @@ fun HomeScreen(homeScreenViewModel: HomeScreenViewModel, navController: NavHostC
     val activity = LocalOnBackPressedDispatcherOwner.current as ComponentActivity
     val context = LocalContext.current
 
+
+    // get all state flow from view model.
     val tabItems = homeScreenViewModel.tabList.collectAsState().value
     val allMovies = homeScreenViewModel.movieList.collectAsState().value
     val filteredMovies = homeScreenViewModel.movieListFiltered.collectAsState().value
@@ -97,6 +99,20 @@ fun HomeScreen(homeScreenViewModel: HomeScreenViewModel, navController: NavHostC
             // make if that is main functionality to
             // wait until init() finish and tabs category loaded
             if (tabItems.isNotEmpty()){
+                // on tab selected or swap using HorizontalPager
+                // Use LaunchedEffect to show ShimmerGridMovies() for 2 seconds
+                // loading list for new page
+                LaunchedEffect(pagerState.currentPage) {
+                    shimmerVisible = true
+                    delay(1000) // 1 seconds delay
+                    shimmerVisible = false
+
+                    // loading filter movies for current tab category
+                    homeScreenViewModel.onSelectingTab(tabItems[pagerState.currentPage])
+                }
+
+
+                //  Box Contain HorizontalPager and ScrollableTabRow
                 Box(modifier = Modifier.padding(it)){
                     HorizontalPager(
                         count = tabItems.size, state = pagerState,
@@ -105,43 +121,32 @@ fun HomeScreen(homeScreenViewModel: HomeScreenViewModel, navController: NavHostC
                         verticalAlignment = Alignment.Top,
 
                         ) { index ->
-
                         Column(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(top = 50.dp)
-
                         ) {
-                            // on tab selected or swap using HorizontalPager
-                            // Use LaunchedEffect to show ShimmerGridMovies() for 2 seconds
-
-                            LaunchedEffect(index) {
-                                shimmerVisible = true
-                                delay(1000) // 1 seconds delay
-                                shimmerVisible = false
-                            }
                             // check if current tab is all or filter.
                             if (tabItems[index].id==-1){
                                 if (shimmerVisible || allMovies.isEmpty() ) {
                                     // Show ShimmerGridMovies() when shimmerVisible is true or list empty
                                     ShimmerGridMovies()
-                                } else {
+                                }
+                                else {
                                     // Show MoviesGridList() when shimmerVisible is false or list not empty
                                     MoviesGridList(allMovies,navController){
                                         coroutineScope.launch {
                                             tween<Float>(600)
                                             pagerState.animateScrollToPage(
-                                                page = (pagerState.currentPage + 1) % (pagerState.pageCount)
+                                                page = (index + 1) % (pagerState.pageCount)
                                             )
                                         }
 
                                     }
                                 }
 
-                            }else{
-                                LaunchedEffect(index){
-                                    homeScreenViewModel.onSelectingTab(tabItems[index])
-                                }
+                            }
+                            else{
                                 if (shimmerVisible || filteredMovies.isEmpty() ) {
                                     // Show ShimmerGridMovies() when shimmerVisible is true or list empty
                                     ShimmerGridMovies()
@@ -151,7 +156,7 @@ fun HomeScreen(homeScreenViewModel: HomeScreenViewModel, navController: NavHostC
                                         coroutineScope.launch {
                                             tween<Float>(600)
                                             pagerState.animateScrollToPage(
-                                                page = (pagerState.currentPage + 1) % (pagerState.pageCount)
+                                                page = (index + 1) % (pagerState.pageCount)
                                             )
                                         }
                                     }
@@ -159,10 +164,7 @@ fun HomeScreen(homeScreenViewModel: HomeScreenViewModel, navController: NavHostC
 
                             }
 
-
                         }
-
-
                     }
 
 
@@ -186,6 +188,8 @@ fun HomeScreen(homeScreenViewModel: HomeScreenViewModel, navController: NavHostC
                         }
                     ) {
                         tabItems.forEachIndexed { index, category ->
+
+
                             val color = remember {
                                 Animatable(RedComponentColor3)
                             }
