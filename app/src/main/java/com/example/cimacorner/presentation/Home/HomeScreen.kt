@@ -59,8 +59,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun HomeScreen(homeScreenViewModel: HomeScreenViewModel, navController: NavHostController){
 
-
-
     var doubleBackToExitPressedOnce = false
     val activity = LocalOnBackPressedDispatcherOwner.current as ComponentActivity
     val context = LocalContext.current
@@ -86,155 +84,155 @@ fun HomeScreen(homeScreenViewModel: HomeScreenViewModel, navController: NavHostC
             SearchAppBar(
                 text = "",
                 onClicked = {
-                            navController.navigate(Screens.Search.route)
+                    // go to search screen
+                    navController.navigate(Screens.Search.route)
                 },
             )
 
         }
     ){
-        if (internetAvailable){
+        // check internet before display screen
+        if (internetAvailable ){
 
-            Box(modifier = Modifier.padding(it)){
-                HorizontalPager(
-                    count = tabItems.size, state = pagerState,
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.Top,
-
-                    ) { index ->
-
-                    Column(
+            // make if that is main functionality to
+            // wait until init() finish and tabs category loaded
+            if (tabItems.isNotEmpty()){
+                Box(modifier = Modifier.padding(it)){
+                    HorizontalPager(
+                        count = tabItems.size, state = pagerState,
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 50.dp)
+                            .fillMaxWidth(),
+                        verticalAlignment = Alignment.Top,
 
-                    ) {
-                        // on tab selected or swap using HorizontalPager
-                        // Use LaunchedEffect to show ShimmerGridMovies() for 2 seconds
+                        ) { index ->
 
-                        LaunchedEffect(index) {
-                            shimmerVisible = true
-                            delay(1000) // 1 seconds delay
-                            shimmerVisible = false
-                        }
-                        // check if current tab is all or filter.
-                        if (tabItems[index].id==-1){
-                            if (shimmerVisible || allMovies.isEmpty() ) {
-                                // Show ShimmerGridMovies() when shimmerVisible is true or list empty
-                                ShimmerGridMovies()
-                            } else {
-                                // Show MoviesGridList() when shimmerVisible is false or list not empty
-                                MoviesGridList(allMovies,navController){
-                                    coroutineScope.launch {
-                                        tween<Float>(600)
-                                        pagerState.animateScrollToPage(
-                                            page = (pagerState.currentPage + 1) % (pagerState.pageCount)
-                                        )
-                                    }
-
-                                }
-                            }
-
-                        }else{
-                            LaunchedEffect(index){
-                                homeScreenViewModel.onSelectingTab(tabItems[index])
-                            }
-                            if (shimmerVisible || filteredMovies.isEmpty() ) {
-                                // Show ShimmerGridMovies() when shimmerVisible is true or list empty
-                                ShimmerGridMovies()
-                            } else {
-                                // Show MoviesGridList() when shimmerVisible is false or list has been filtered complete.
-                                MoviesGridList(filteredMovies,navController){
-                                    coroutineScope.launch {
-                                        tween<Float>(600)
-                                        pagerState.animateScrollToPage(
-                                            page = (pagerState.currentPage + 1) % (pagerState.pageCount)
-                                        )
-                                    }
-                                }
-                            }
-
-                        }
-
-
-                    }
-
-
-                }
-
-
-                ScrollableTabRow(
-                    selectedTabIndex = pagerState.currentPage,
-                    modifier = Modifier
-                        .padding(5.dp)
-                        .background(color = Color.Transparent),
-                    edgePadding = 0.dp,
-                    backgroundColor = BackgroundColor,
-                    indicator = { tabPositions ->
-                        TabRowDefaults.Indicator(
-                            Modifier
-                                .pagerTabIndicatorOffset(
-                                    pagerState,
-                                    tabPositions
-                                )
-                                .width(0.dp)
-                                .height(0.dp)
-                        )
-                    }
-                ) {
-                    tabItems.forEachIndexed { index, category ->
-                        val color = remember {
-                            Animatable(RedComponentColor3)
-                        }
-                        LaunchedEffect(pagerState.currentPage == index) {
-                            color.animateTo(if (pagerState.currentPage == index) RedComponentColor3 else DarkComponentColor1)
-                        }
-                        Tab(
-                            text = {
-                                Text(
-                                    category.name,
-                                    style = if (pagerState.currentPage == index) TextStyle(
-                                        color = TextColor,
-                                        fontSize = 18.sp
-                                    )
-                                    else TextStyle(
-                                        color = RedTextColor,
-                                        fontSize = 16.sp
-                                    )
-                                )
-                            },
-                            selected = pagerState.currentPage == index,
+                        Column(
                             modifier = Modifier
-                                .padding(end = 4.dp)
-                                .background(
-                                    color = color.value,
-                                    shape = RoundedCornerShape(24.dp)
-                                ),
-                            onClick = {
-                                coroutineScope.launch {
-                                    pagerState.animateScrollToPage(index)
+                                .fillMaxWidth()
+                                .padding(top = 50.dp)
+
+                        ) {
+                            // on tab selected or swap using HorizontalPager
+                            // Use LaunchedEffect to show ShimmerGridMovies() for 2 seconds
+
+                            LaunchedEffect(index) {
+                                shimmerVisible = true
+                                delay(1000) // 1 seconds delay
+                                shimmerVisible = false
+                            }
+                            // check if current tab is all or filter.
+                            if (tabItems[index].id==-1){
+                                if (shimmerVisible || allMovies.isEmpty() ) {
+                                    // Show ShimmerGridMovies() when shimmerVisible is true or list empty
+                                    ShimmerGridMovies()
+                                } else {
+                                    // Show MoviesGridList() when shimmerVisible is false or list not empty
+                                    MoviesGridList(allMovies,navController){
+                                        coroutineScope.launch {
+                                            tween<Float>(600)
+                                            pagerState.animateScrollToPage(
+                                                page = (pagerState.currentPage + 1) % (pagerState.pageCount)
+                                            )
+                                        }
+
+                                    }
                                 }
 
-                            })
+                            }else{
+                                LaunchedEffect(index){
+                                    homeScreenViewModel.onSelectingTab(tabItems[index])
+                                }
+                                if (shimmerVisible || filteredMovies.isEmpty() ) {
+                                    // Show ShimmerGridMovies() when shimmerVisible is true or list empty
+                                    ShimmerGridMovies()
+                                } else {
+                                    // Show MoviesGridList() when shimmerVisible is false or list has been filtered complete.
+                                    MoviesGridList(filteredMovies,navController){
+                                        coroutineScope.launch {
+                                            tween<Float>(600)
+                                            pagerState.animateScrollToPage(
+                                                page = (pagerState.currentPage + 1) % (pagerState.pageCount)
+                                            )
+                                        }
+                                    }
+                                }
+
+                            }
+
+
+                        }
+
+
+                    }
+
+
+                    ScrollableTabRow(
+                        selectedTabIndex = pagerState.currentPage,
+                        modifier = Modifier
+                            .padding(5.dp)
+                            .background(color = Color.Transparent),
+                        edgePadding = 0.dp,
+                        backgroundColor = BackgroundColor,
+                        indicator = { tabPositions ->
+                            TabRowDefaults.Indicator(
+                                Modifier
+                                    .pagerTabIndicatorOffset(
+                                        pagerState,
+                                        tabPositions
+                                    )
+                                    .width(0.dp)
+                                    .height(0.dp)
+                            )
+                        }
+                    ) {
+                        tabItems.forEachIndexed { index, category ->
+                            val color = remember {
+                                Animatable(RedComponentColor3)
+                            }
+                            LaunchedEffect(pagerState.currentPage == index) {
+                                color.animateTo(if (pagerState.currentPage == index) RedComponentColor3 else DarkComponentColor1)
+                            }
+                            Tab(
+                                text = {
+                                    Text(
+                                        category.name,
+                                        style = if (pagerState.currentPage == index) TextStyle(
+                                            color = TextColor,
+                                            fontSize = 18.sp
+                                        )
+                                        else TextStyle(
+                                            color = RedTextColor,
+                                            fontSize = 16.sp
+                                        )
+                                    )
+                                },
+                                selected = pagerState.currentPage == index,
+                                modifier = Modifier
+                                    .padding(end = 4.dp)
+                                    .background(
+                                        color = color.value,
+                                        shape = RoundedCornerShape(24.dp)
+                                    ),
+                                onClick = {
+                                    coroutineScope.launch {
+                                        pagerState.animateScrollToPage(index)
+                                    }
+
+                                })
+                        }
+
                     }
 
                 }
 
             }
-
-
-
-
-
         }
         else{
+            // no internet screen
             NoInternetScreen()
         }
 
-
-
-
-        //Back Handler
+        //Back Handler, when user need to leave app
         BackHandler(onBack = {
             if (doubleBackToExitPressedOnce) {
                 finishAffinity(activity)

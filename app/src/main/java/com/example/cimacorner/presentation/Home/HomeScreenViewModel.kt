@@ -63,9 +63,10 @@ class HomeScreenViewModel @Inject constructor(
 
 
     private fun getCategoriesList(){
-        _tabList.value = listOf( allCategory)
+
         viewModelScope.launch(Dispatchers.IO) {
             categoriesUseCase.getMovieCategories().collect{
+                _tabList.value = listOf(allCategory)
                 _tabList.value = _tabList.value + it
             }
         }
