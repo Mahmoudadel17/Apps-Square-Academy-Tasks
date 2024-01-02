@@ -73,6 +73,7 @@ fun SearchAppBar(
                 )
             },
             textStyle = TextStyle(
+                color = TextColor,
                 fontSize = MaterialTheme.typography.subtitle1.fontSize
             ),
             singleLine = true,
