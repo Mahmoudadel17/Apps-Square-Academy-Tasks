@@ -18,9 +18,13 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
@@ -34,13 +38,13 @@ import com.example.cimacorner.ui.theme.TextColor
 @Composable
 fun SearchAppBar(
     text: String,
-    enabl : Boolean = false,
+    enable : Boolean = false,
     onClicked: () -> Unit = {} ,
     onTextChange: (String) -> Unit = {},
     onSearchClicked: (String) -> Unit = {},
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
-
+    val focusRequester = remember { FocusRequester() }
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -53,12 +57,13 @@ fun SearchAppBar(
         shape = RoundedCornerShape(16.dp)
     ) {
         TextField(modifier = Modifier
+            .focusRequester(focusRequester)
             .fillMaxWidth(),
             value = text,
             onValueChange = {
                 onTextChange(it)
             },
-            enabled = enabl,
+            enabled = enable,
             placeholder = {
                 Text(
                     modifier = Modifier
@@ -100,5 +105,12 @@ fun SearchAppBar(
                 cursorColor = TextColor.copy(alpha = ContentAlpha.medium),
                 focusedIndicatorColor =  Color.Transparent,
             ))
+        LaunchedEffect(Unit) {
+           if (enable){
+               focusRequester.requestFocus()
+           }
+        }
+
     }
+
 }

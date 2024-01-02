@@ -15,7 +15,7 @@ fun SearchScreen(searchScreenViewModel: SearchScreenViewModel, navController: Na
     Column {
         SearchAppBar(
             text = searchQuery,
-            enabl = true,
+            enable = true,
             onTextChange = {searchScreenViewModel.onChangeSearchQuery(it)},
             onSearchClicked = {searchScreenViewModel.onIconSearchClick()},
         )
