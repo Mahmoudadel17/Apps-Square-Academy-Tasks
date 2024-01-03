@@ -75,6 +75,12 @@ width="200"
 [<img src="/screenShots/Search.PNG" align="left"
 width="200"
     hspace="10" vspace="10">](/screenShots/Search.PNG)
+    
+
+[<img src="/screenShots/details.PNG" align="left"
+width="200"
+    hspace="10" vspace="10">](/screenShots/details.PNG)
+
 
 [<img src="/screenShots/NoInternet.PNG" align="center"
 width="200"
